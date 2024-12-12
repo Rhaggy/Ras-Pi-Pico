@@ -1,9 +1,9 @@
 from machine import Pin, PWM
 from time import sleep
 
-red = PWM(Pin(4))
-green = PWM(Pin(5))
-blue = PWM(Pin(6))
+red = PWM(Pin(2))
+green = PWM(Pin(3))
+blue = PWM(Pin(4))
 
 red.freq(1000)
 green.freq(1000)
@@ -15,8 +15,10 @@ def set_coulor(r,g,b):
     blue.duty_u16(b*257)   
 
 while True:
-    r = 200
-    g = 0
+    r = 0
+    g = 255
     b = 0
+    
+    
     set_coulor(r,g,b)
 
