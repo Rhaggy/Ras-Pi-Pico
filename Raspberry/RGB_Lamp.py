@@ -15,9 +15,9 @@ def set_coulor(r,g,b):
     blue.duty_u16(b*257)   
 
 while True:
-    r = 0
-    g = 255
-    b = 0
+    r = 255
+    g = 0
+    b = 255
     
     
     set_coulor(r,g,b)
