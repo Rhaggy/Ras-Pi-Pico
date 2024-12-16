@@ -15,14 +15,7 @@ def set_coulor(r,g,b):
     green.duty_u16(g*257)  
     blue.duty_u16(b*257) 
 
-
 while True:
-    r = [x for x in range(0,256)]
-    g = [y for y in range(0,256)]
-    b = [z for z in range(0,256)]
-    random.random(r)
-    random.random(g)
-    random.random(b)
-
-
-    set_coulor(r,g,b)
+    for i in range(10):
+        set_coulor(255,0,0)
+    
