@@ -25,19 +25,8 @@ while True:
         sleep(1)
         sensor.measure()
         temp = sensor.temperature()
-        
         humidity = sensor.humidity()
         print(f"Temp:{temp} C, Humidity:{humidity}%")
+        
     except Exception as e:
         print("Errr reading from DHT11:", e)
-    if temp >= 20:
-        while True:
-            r = 0
-            g = 255
-            b = 0
-    
-            set_coulor(r,g,b)
-    continue
-        
-
-    
