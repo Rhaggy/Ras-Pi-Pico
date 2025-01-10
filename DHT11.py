@@ -2,20 +2,35 @@ from machine import Pin
 from time import sleep 
 from dht import DHT11 
 from machine import Pin, PWM
+from simple import MQTTClient
+import network
 
+ssid = 'iPhone_12_Pro'
+password = 'g8xw341m80m3q'
 
-red = PWM(Pin(21))
-green = PWM(Pin(20))
-blue = PWM(Pin(19))
+wifi = network.WLAN(network.STA_IF)
+wifi.active(True)
 
-red.freq(1000)
-green.freq(1000)
-blue.freq(1000)
+wifi.connect(ssid, password)
 
-def set_coulor(r,g,b):
-    red.duty_u16(r*257)  
-    green.duty_u16(g*257)  
-    blue.duty_u16(b*257) 
+print('Försöker ansluta till WiFi...')
+while not wifi.isconnected():
+    sleep(1)
+
+print('Ansluten till WiFi!')
+print('IP-adress:', wifi.ifconfig()[0])
+
+ADAFRUIT_AIO_USERNAME = "Rhaggy_"
+ADAFRUIT_AIO_KEY   = "ja"
+ADAFRUIT_IO_FEED = "Rhaggy_/feeds/temperature"
+
+def send_data(temp):
+    client = MQTTClient("umqtt_client", "io.adafruit.com", user = ADAFRUIT_AIO_USERNAME, password = ADAFRUIT_AIO_KEY)
+    client.connect()
+    print("Ansluten till Adafruit IO")
+    #publicera  
+    client.publish(ADAFRUIT_IO_FEED, str(temp))
+    print(f"Tempratur {temp} sickad till {ADAFRUIT_IO_FEED}")
 
 sensor = DHT11(Pin(28))
 
@@ -27,7 +42,7 @@ while True:
         temp = sensor.temperature()
         humidity = sensor.humidity()
         print(f"Temp:{temp} C, Humidity:{humidity}%")
-        
+        send_data(temp)
+        sleep(60)
     except Exception as e:
         print("Errr reading from DHT11:", e)
-    
